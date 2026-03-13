@@ -8,6 +8,8 @@ const app = express();
 
 const authRoutes = require("./routes/authRoutes");
 
+const projectRoutes = require("./routes/projectRoutes");
+
 // Connect Database
 connectDB();
 
@@ -17,6 +19,9 @@ app.use(express.json());
 
 //Connect Routes in Server
 app.use("/api/auth", authRoutes);
+
+//Connect Project Routes
+app.use("/api/projects", projectRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
