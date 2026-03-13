@@ -6,12 +6,17 @@ const connectDB = require("./config/db");
 
 const app = express();
 
+const authRoutes = require("./routes/authRoutes");
+
 // Connect Database
 connectDB();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+//Connect Routes in Server
+app.use("/api/auth", authRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
