@@ -10,6 +10,8 @@ const authRoutes = require("./routes/authRoutes");
 
 const projectRoutes = require("./routes/projectRoutes");
 
+const taskRoutes = require("./routes/taskRoutes");
+
 // Connect Database
 connectDB();
 
@@ -22,6 +24,9 @@ app.use("/api/auth", authRoutes);
 
 //Connect Project Routes
 app.use("/api/projects", projectRoutes);
+
+//Connect Task Routes
+app.use("/api/tasks", taskRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
