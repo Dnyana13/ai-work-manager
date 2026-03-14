@@ -12,6 +12,8 @@ const projectRoutes = require("./routes/projectRoutes");
 
 const taskRoutes = require("./routes/taskRoutes");
 
+const aiRoutes = require("./routes/aiRoutes");
+
 // Connect Database
 connectDB();
 
@@ -27,6 +29,9 @@ app.use("/api/projects", projectRoutes);
 
 //Connect Task Routes
 app.use("/api/tasks", taskRoutes);
+
+//Connect AI Routes
+app.use("/api/ai", aiRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
