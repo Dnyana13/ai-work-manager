@@ -1,15 +1,27 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 function App() {
+
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
 
-      <h1 className="text-4xl font-bold text-blue-600">
-        AI Work Manager
-      </h1>
+    <BrowserRouter>
 
-    </div>
+      <Routes>
+
+        <Route path="/" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
+
+      </Routes>
+
+    </BrowserRouter>
+
   );
+
 }
 
 export default App;
