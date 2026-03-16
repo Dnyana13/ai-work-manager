@@ -28,13 +28,12 @@ exports.createTask = async (req, res) => {
 
 
 // GET TASKS BY PROJECT
-exports.getTasks = async (req, res) => {
+exports.getTasksByProject = async (req, res) => {
 
     try {
 
         const tasks = await Task.find({
-            project: req.params.projectId,
-            owner: req.user.id
+            projectId: req.params.projectId,
         });
 
         res.json(tasks);

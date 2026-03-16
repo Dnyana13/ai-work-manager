@@ -5,15 +5,14 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 const {
     createTask,
-    getTasks,
+    getTasksByProject,
     updateTask,
     deleteTask
 } = require("../controllers/taskController");
 
-
 router.post("/", authMiddleware, createTask);
 
-router.get("/:projectId", authMiddleware, getTasks);
+router.get("/project/:projectId", authMiddleware, getTasksByProject);
 
 router.put("/:id", authMiddleware, updateTask);
 

@@ -1,6 +1,9 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+
+const aiRoutes = require("./routes/aiRoutes");
 
 const connectDB = require("./config/db");
 
@@ -12,7 +15,7 @@ const projectRoutes = require("./routes/projectRoutes");
 
 const taskRoutes = require("./routes/taskRoutes");
 
-const aiRoutes = require("./routes/aiRoutes");
+
 
 // Connect Database
 connectDB();
