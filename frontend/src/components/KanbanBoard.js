@@ -38,31 +38,48 @@ const KanbanBoard = ({ projectId }) => {
 
   };
 
-  const onDragEnd = (result) => {
+  const onDragEnd = async (result) => {
 
     if (!result.destination) return;
 
-    const updatedTasks = tasks.map((task) => {
+    const taskId = result.draggableId;
+    const newStatus = result.destination.droppableId;
 
-      if (task._id === result.draggableId) {
-        return {
-          ...task,
-          status: result.destination.droppableId
-        };
-      }
+    try {
 
-      return task;
+      const token = localStorage.getItem("token");
 
-    });
+      const res = await axios.put(
+        `http://localhost:5000/api/tasks/${taskId}/status`,
+        { status: newStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
-    setTasks(updatedTasks);
+      console.log("API RESPONSE:", res.data);
+
+      // update UI immediately
+      const updatedTasks = tasks.map((task) => {
+        if (task._id === taskId) {
+          return { ...task, status: newStatus };
+        }
+        return task;
+      });
+
+      setTasks(updatedTasks);
+
+    } catch (error) {
+      console.error("Update error:", error.response?.data || error.message);
+    }
 
   };
 
   const getTasks = (status) =>
     tasks.filter((task) => task.status === status);
 
-  // ✅ IMPORTANT FIX: don't unmount DragDropContext
   if (loading) return <div>Loading tasks...</div>;
 
   return (
@@ -94,7 +111,7 @@ const KanbanBoard = ({ projectId }) => {
 
                   <Draggable
                     key={task._id}
-                    draggableId={task._id.toString()} // ✅ FIX
+                    draggableId={task._id.toString()}
                     index={index}
                   >
 

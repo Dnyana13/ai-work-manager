@@ -49,23 +49,34 @@ exports.getTasksByProject = async (req, res) => {
 
 // UPDATE TASK
 exports.updateTask = async (req, res) => {
+
   try {
 
-    const task = await Task.findByIdAndUpdate(
-      req.params.taskId,
-      req.body,
+    const { id } = req.params;
+    const { status } = req.body;
+
+    console.log("Updating Task:", id, "to", status); 
+
+    const updatedTask = await Task.findByIdAndUpdate(
+      id,
+      { status },
       { new: true }
     );
 
-    res.json(task);
+    console.log("Updated Task:", task);
+
+    res.json(updatedTask);
 
   } catch (error) {
 
-    res.status(500).json({ message: "Error updating task" });
+    res.status(500).json({
+      message: "Failed to update task",
+      error: error.message
+    });
 
   }
-};
 
+};
 
 // DELETE TASK
 exports.deleteTask = async (req, res) => {
@@ -81,5 +92,32 @@ exports.deleteTask = async (req, res) => {
         res.status(500).json({ message: error.message });
 
     }
+
+};
+
+
+exports.updateTaskStatus = async (req, res) => {
+
+  try {
+
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const task = await Task.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    res.json(task);
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: "Failed to update task",
+      error: error.message
+    });
+
+  }
 
 };
