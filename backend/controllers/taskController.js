@@ -49,23 +49,21 @@ exports.getTasksByProject = async (req, res) => {
 
 // UPDATE TASK
 exports.updateTask = async (req, res) => {
+  try {
 
-    try {
+    const task = await Task.findByIdAndUpdate(
+      req.params.taskId,
+      req.body,
+      { new: true }
+    );
 
-        const task = await Task.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
+    res.json(task);
 
-        res.json(task);
+  } catch (error) {
 
-    } catch (error) {
+    res.status(500).json({ message: "Error updating task" });
 
-        res.status(500).json({ message: error.message });
-
-    }
-
+  }
 };
 
 

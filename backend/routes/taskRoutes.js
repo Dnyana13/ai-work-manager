@@ -16,6 +16,8 @@ router.get("/project/:projectId", authMiddleware, getTasksByProject);
 
 router.put("/:id", authMiddleware, updateTask);
 
+router.put("/:taskId", updateTask);
+
 router.delete("/:id", authMiddleware, deleteTask);
 
 module.exports = router;

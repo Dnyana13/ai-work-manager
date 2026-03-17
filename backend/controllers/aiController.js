@@ -9,19 +9,26 @@ exports.generateTasks = async (req, res) => {
 
     const { projectId } = req.body;
 
+    if (!projectId) {
+      return res.status(400).json({ message: "Project ID required" });
+    }
+
     const model = genAI.getGenerativeModel({
       model: "gemini-3-flash-preview"
     });
 
-    const result = await model.generateContent(
-      "Generate 8 short software development tasks. Return a numbered list."
-    );
+    const prompt = `
+Generate 8 short software development tasks.
+Return only a numbered list.
+Example:
+1. Setup database schema
+2. Create login API
+`;
 
-    const response = await result.response;
+    const result = await model.generateContent(prompt);
 
-    const text = response.text();
+    const text = result.response.text();
 
-    // FIX: declare tasks correctly
     const tasks = text
       .split("\n")
       .map(t =>
